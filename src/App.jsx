@@ -7,22 +7,35 @@ import TodoInput from './components/TodoInput';
 
 class App extends Component {
   state = {
-    items: [
-      { id: 1, title: 'wake up' },
-      { id: 2, title: 'make breakfast' }
-    ],
+    items: [],
     id: uuidv4(),
     item: '',
     editItem: false
   };
 
   handleChange = e => {
-    console.log('handle change');
+    this.setState({
+      item: e.target.value
+    });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('handle submit');
+    const newItem = {
+      id: this.state.id,
+      title: this.state.item
+    };
+    const updatedItems = [...this.state.items, newItem];
+
+    this.setState(
+      {
+        items: updatedItems,
+        item: '',
+        id: uuidv4(),
+        editItem: false
+      },
+      () => console.log(this.state)
+    );
   };
 
   clearList = () => {
@@ -38,7 +51,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="container">
         <div className="row">
